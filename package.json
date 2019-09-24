@@ -1,0 +1,92 @@
+{
+  "name": "postcss",
+  "version": "1.0.1",
+  "displayName": "PostCSS Language Support",
+  "description": "Syntax highlighting for modern and experimental CSS in VSCode",
+  "author": "Jonathan Neal <jonathantneal@hotmail.com>",
+  "publisher": "csstools",
+  "license": "CC0-1.0",
+  "repository": "csstools/postcss-language",
+  "homepage": "https://github.com/csstools/postcss-language#readme",
+  "bugs": "https://github.com/csstools/postcss-language/issues",
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#293845",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.18.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "postcss",
+        "configuration": "./postcss.language.configuration.json",
+        "aliases": [
+          "PostCSS",
+          "pcss"
+        ],
+        "extensions": [
+          ".css",
+          ".pcss",
+          ".postcss"
+        ],
+        "mimetypes": [
+          "text/css",
+          "text/x-pcss",
+          "text/pcss"
+        ]
+      }
+    ],
+    "grammars": [
+      {
+        "scopeName": "source.css",
+        "path": "./syntaxes/source.css.tmLanguage.json",
+        "language": "postcss"
+      },
+      {
+        "scopeName": "text.html.basic.css",
+        "path": "./syntaxes/text.html.basic.css.tmLanguage.json",
+        "injectTo": [
+          "text.html"
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.block.css": "postcss"
+        }
+      },
+      {
+        "scopeName": "text.html.markdown.css",
+        "path": "./syntaxes/text.html.markdown.css.tmLanguage.json",
+        "injectTo": [
+          "text.html.markdown"
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.block.css": "postcss"
+        }
+      }
+    ]
+  },
+  "keywords": [
+    "css",
+    "cssnext",
+    "csswg",
+    "experimental",
+    "future",
+    "grammar",
+    "language",
+    "logical",
+    "modern",
+    "next",
+    "postcss",
+    "postcss-preset-env",
+    "spec",
+    "specification",
+    "stage",
+    "syntax",
+    "vscode",
+    "w3c"
+  ]
+}

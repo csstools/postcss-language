@@ -1,0 +1,66 @@
+{
+  "scopeName": "text.html.basic.css",
+  "injectionSelector": "L:text.html",
+  "patterns": [
+    {
+      "name": "meta.embedded.block.html",
+      "begin": "(?i)(<)(style)(?=\\s|/?>)",
+      "beginCaptures": {
+        "0": {
+          "name": "meta.tag.metadata.style.start.html"
+        },
+        "1": {
+          "name": "punctuation.definition.tag.begin.html"
+        },
+        "2": {
+          "name": "entity.name.tag.html"
+        }
+      },
+      "end": "(?i)((<)/)(style)\\s*(>)",
+      "endCaptures": {
+        "0": {
+          "name": "meta.tag.metadata.style.end.html"
+        },
+        "1": {
+          "name": "punctuation.definition.tag.begin.html"
+        },
+        "2": {
+          "name": "source.css"
+        },
+        "3": {
+          "name": "entity.name.tag.html"
+        },
+        "4": {
+          "name": "punctuation.definition.tag.end.html"
+        }
+      },
+      "patterns": [
+        {
+          "name": "meta.tag.metadata.style.start.html",
+          "begin": "\\G",
+          "end": "(>)",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.tag.end.html"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#attribute"
+            }
+          ]
+        },
+        {
+          "name": "source.css",
+          "begin": "(?!\\G)",
+          "end": "(?=</(?i:style))",
+          "patterns": [
+            {
+              "include": "source.css"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
