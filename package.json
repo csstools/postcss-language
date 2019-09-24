@@ -1,6 +1,6 @@
 {
   "name": "postcss",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "displayName": "PostCSS Language Support",
   "description": "Syntax highlighting for modern and experimental CSS in VSCode",
   "author": "Jonathan Neal <jonathantneal@hotmail.com>",
@@ -48,16 +48,6 @@
         "language": "postcss"
       },
       {
-        "scopeName": "text.html.basic.css",
-        "path": "./syntaxes/text.html.basic.css.tmLanguage.json",
-        "injectTo": [
-          "text.html"
-        ],
-        "embeddedLanguages": {
-          "meta.embedded.block.css": "postcss"
-        }
-      },
-      {
         "scopeName": "text.html.markdown.css",
         "path": "./syntaxes/text.html.markdown.css.tmLanguage.json",
         "injectTo": [
@@ -76,8 +66,12 @@
     "experimental",
     "future",
     "grammar",
+    "html",
     "language",
     "logical",
+    "markdown",
+    "marko",
+    "md",
     "modern",
     "next",
     "postcss",
@@ -85,7 +79,9 @@
     "spec",
     "specification",
     "stage",
+    "style",
     "syntax",
+    "tag",
     "vscode",
     "w3c"
   ]
