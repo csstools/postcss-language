@@ -29,9 +29,6 @@ This extension is applied to `.css`, `.pcss` and `.postcss` files. It also appli
 {
   "emmet.includeLanguages": {
     "postcss": "css"
-  },
-  "emmet.syntaxProfiles": {
-    "postcss": "css"
   }
 }
 ```
