@@ -10,6 +10,10 @@
   "homepage": "https://github.com/csstools/postcss-language#readme",
   "bugs": "https://github.com/csstools/postcss-language/issues",
   "icon": "icon.png",
+  "activationEvents": [
+    "onLanguage:css",
+    "onCommand:_css.applyCodeAction"
+  ],
   "galleryBanner": {
     "color": "#293845",
     "theme": "dark"
