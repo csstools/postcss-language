@@ -1,5 +1,10 @@
 # Changes to PostCSS Language Support
 
+## 1.0.4
+
+- Support CSS Modules `compose-with` alternative.
+- Support CSS Modules `@composes` and `@compose-with` alternatives.
+
 ## 1.0.3
 
 - Removed unnecessary `emmet.syntaxProfiles` from Emmet section
