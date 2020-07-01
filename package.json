@@ -9,7 +9,7 @@
   "repository": {
       "type": "git",
       "url": "https://github.com/csstools/postcss-language.git"
-  }
+  },
   "homepage": "https://github.com/csstools/postcss-language#readme",
   "bugs": "https://github.com/csstools/postcss-language/issues",
   "icon": "icon.png",
