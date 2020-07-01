@@ -6,7 +6,10 @@
   "author": "Jonathan Neal <jonathantneal@hotmail.com>",
   "publisher": "csstools",
   "license": "CC0-1.0",
-  "repository": "csstools/postcss-language",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/csstools/postcss-language.git"
+  }
   "homepage": "https://github.com/csstools/postcss-language#readme",
   "bugs": "https://github.com/csstools/postcss-language/issues",
   "icon": "icon.png",
