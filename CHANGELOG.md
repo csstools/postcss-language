@@ -1,5 +1,9 @@
 # Changes to PostCSS Language Support
 
+## 1.0.7
+
+- Support color customizations for variables and other custom words.
+
 ## 1.0.6
 
 - Support generic blocks in property values; enclosed by round, square, or curly brackets.

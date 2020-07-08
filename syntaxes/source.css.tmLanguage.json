@@ -623,7 +623,7 @@
           "patterns": [
             {
               "name": "meta.at-rule.header.css",
-              "begin": "(?i)\\G(@)-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
+              "begin": "(?i)\\G(@(?:-{2,})?)-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
               "beginCaptures": {
                 "0": {
                   "name": "keyword.control.at-rule.css"
@@ -652,7 +652,7 @@
           "patterns": [
             {
               "name": "meta.at-rule.header.css",
-              "begin": "(?i)\\G(@)-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
+              "begin": "(?i)\\G(@(?:-{2,})?)-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
               "beginCaptures": {
                 "0": {
                   "name": "keyword.control.at-rule.css"
@@ -1531,12 +1531,15 @@
         },
         {
           "name": "meta.function.misc.css",
-          "begin": "(-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)(\\()",
+          "begin": "((-{2,})?-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)(\\()",
           "beginCaptures": {
             "1": {
               "name": "support.function.misc.css"
             },
             "2": {
+              "name": "punctuation.definition.function.custom.css"
+            },
+            "3": {
               "name": "punctuation.section.function.begin.bracket.round.css"
             }
           },
@@ -1553,6 +1556,10 @@
             },
             {
               "include": "#property-values"
+            },
+            {
+              "name": "punctuation.terminator.misc.css",
+              "match": ";"
             },
             {
               "name": "variable.parameter.misc.css",
@@ -1908,7 +1915,7 @@
           "include": "#composes-atrule"
         },
         {
-          "begin": "(?i)(@)(-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)",
+          "begin": "(?i)(@(?:-{2,})?)(-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)",
           "beginCaptures": {
             "0": {
               "name": "keyword.control.at-rule.nesting.css"
@@ -1994,7 +2001,7 @@
           "match": "(?<![\\w-])(-{2,})(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
           "captures": {
             "1": {
-              "name": "punctuation.definition.variable"
+              "name": "punctuation.definition.variable.property.css"
             }
           }
         },
@@ -2143,7 +2150,7 @@
           "match": "(?<![\\w-])(-{2,})(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
           "captures": {
             "1": {
-              "name": "punctuation.definition.variable"
+              "name": "punctuation.definition.variable.property.css"
             }
           }
         },
@@ -2207,7 +2214,7 @@
               "name": "variable.sass.css"
             },
             "2": {
-              "name": "punctuation.definition.variable"
+              "name": "punctuation.definition.variable.sass.css"
             },
             "3": {
               "name": "punctuation.separator.key-value.css"
@@ -2313,7 +2320,7 @@
       "match": "(?<![\\w-])(\\$)-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
       "captures": {
         "1": {
-          "name": "punctuation.definition.variable"
+          "name": "punctuation.definition.variable.sass.css"
         }
       }
     },
