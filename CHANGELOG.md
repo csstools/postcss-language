@@ -1,5 +1,9 @@
 # Changes to PostCSS Language Support
 
+## 1.0.6
+
+- Support generic blocks in property values; enclosed by round, square, or curly brackets.
+
 ## 1.0.5
 
 - Support all identifier tokens wherever identifier tokens are supported.

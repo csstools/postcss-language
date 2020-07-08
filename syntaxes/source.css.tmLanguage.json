@@ -692,6 +692,70 @@
         }
       ]
     },
+    "blocks": {
+      "patterns": [
+        {
+          "name": "meta.block.round.misc.css",
+          "begin": "\\(",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.section.block.begin.bracket.round.css"
+            }
+          },
+          "end": "\\)",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.section.block.end.bracket.round.css"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#property-values"
+            }
+          ]
+        },
+        {
+          "name": "meta.block.square.misc.css",
+          "begin": "\\[",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.section.block.begin.bracket.square.css"
+            }
+          },
+          "end": "\\]",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.section.block.end.bracket.square.css"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#property-values"
+            }
+          ]
+        },
+        {
+          "name": "meta.block.curly.misc.css",
+          "begin": "\\{",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.section.block.begin.bracket.curly.css"
+            }
+          },
+          "end": "\\}",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.section.block.end.bracket.curly.css"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#property-values"
+            }
+          ]
+        }
+      ]
+    },
     "color-keywords": {
       "patterns": [
         {
@@ -2007,6 +2071,9 @@
         },
         {
           "include": "#misc-words"
+        },
+        {
+          "include": "#blocks"
         }
       ]
     },
