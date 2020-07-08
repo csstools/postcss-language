@@ -259,7 +259,7 @@
                 },
                 {
                   "name": "variable.parameter.style-name.css",
-                  "match": "(?:[-a-zA-Z_]|[^\\x00-\\x7F])(?:[-a-zA-Z0-9_]|[^\\x00-\\x7F]|\\\\(?:[0-9a-fA-F]{1,6}|.))*",
+                  "match": "-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
                   "captures": {
                     "0": {
                       "patterns": [
@@ -411,7 +411,7 @@
                 },
                 {
                   "name": "variable.parameter.keyframe-list.css",
-                  "match": "(?:[-a-zA-Z_]|[^\\x00-\\x7F])(?:[-a-zA-Z0-9_]|[^\\x00-\\x7F]|\\\\(?:[0-9a-fA-F]{1,6}|.))*",
+                  "match": "-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
                   "captures": {
                     "0": {
                       "patterns": [
@@ -587,7 +587,7 @@
               "include": "#url"
             },
             {
-              "match": "(?i)(?:\\G|^|(?<=\\s))(?=(?<=\\s|^)(?:[-a-zA-Z_]|[^\\x00-\\x7F])|\\s*/\\*(?:[^*]|\\*[^/])*\\*/)(.*?)((?:[-a-zA-Z_]|[^\\x00-\\x7F])(?:[-a-zA-Z0-9_]|[^\\x00-\\x7F]|\\\\(?:[0-9a-fA-F]{1,6}|.))*)",
+              "match": "(?i)(?:\\G|^|(?<=\\s))(?=(?<=\\s|^)(?:[-a-zA-Z_]|[^\\x00-\\x7F])|\\s*/\\*(?:[^*]|\\*[^/])*\\*/)(.*?)(-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)",
               "captures": {
                 "1": {
                   "patterns": [
@@ -618,12 +618,12 @@
           ]
         },
         {
-          "begin": "(?i)(?=@[\\w-]+[^;]+;s*$)",
+          "begin": "(?i)(?=@-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*[^;]+;s*$)",
           "end": "(?<=;)(?!\\G)",
           "patterns": [
             {
               "name": "meta.at-rule.header.css",
-              "begin": "(?i)\\G(@)[\\w-]+",
+              "begin": "(?i)\\G(@)-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
               "beginCaptures": {
                 "0": {
                   "name": "keyword.control.at-rule.css"
@@ -637,17 +637,22 @@
                 "0": {
                   "name": "punctuation.terminator.rule.css"
                 }
-              }
+              },
+              "patterns": [
+                {
+                  "include": "#property-values"
+                }
+              ]
             }
           ]
         },
         {
-          "begin": "(?i)(?=@[\\w-]+(\\s|\\(|{|/\\*|$))",
+          "begin": "(?i)(?=@-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*(\\s|\\(|{|/\\*|$))",
           "end": "(?<=})(?!\\G)",
           "patterns": [
             {
               "name": "meta.at-rule.header.css",
-              "begin": "(?i)\\G(@)[\\w-]+",
+              "begin": "(?i)\\G(@)-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
               "beginCaptures": {
                 "0": {
                   "name": "keyword.control.at-rule.css"
@@ -656,7 +661,12 @@
                   "name": "punctuation.definition.keyword.css"
                 }
               },
-              "end": "(?=\\s*[{;])"
+              "end": "(?=\\s*[{;])",
+              "patterns": [
+                {
+                  "include": "#property-values"
+                }
+              ]
             },
             {
               "name": "meta.at-rule.body.css",
@@ -879,7 +889,7 @@
           },
           "patterns": [
             {
-              "begin": "\\s+(--[-a-zA-Z_][\\w-]*)",
+              "begin": "\\s+(-{2,}(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)",
               "beginCaptures": {
                 "1": {
                   "patterns": [
@@ -916,7 +926,7 @@
           },
           "patterns": [
             {
-              "begin": "\\s+(:--[-a-zA-Z_][\\w-]*)",
+              "begin": "\\s+(:{1,2}-{2,}(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)",
               "beginCaptures": {
                 "1": {
                   "patterns": [
@@ -953,7 +963,7 @@
           },
           "patterns": [
             {
-              "begin": "\\s+((--)[-a-zA-Z_][\\w-]*)",
+              "begin": "\\s+((-{2,})(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)",
               "beginCaptures": {
                 "1": {
                   "name": "variable.env.css"
@@ -994,7 +1004,7 @@
       ]
     },
     "custom-media-variable": {
-      "match": "(--)[-a-zA-Z_][\\w-]*",
+      "match": "(-{2,})(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
       "captures": {
         "0": {
           "name": "variable.argument.custom-media.css"
@@ -1005,13 +1015,13 @@
       }
     },
     "custom-selector-variable": {
-      "match": "(:--)[-a-zA-Z_][\\w-]*",
+      "match": "(:{1,2}-{2,})(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
       "captures": {
         "0": {
-          "name": "variable.selector.css"
+          "name": "entity.other.attribute-name.pseudo-element.custom.css"
         },
         "1": {
-          "name": "punctuation.definition.variable.selector.css"
+          "name": "punctuation.definition.entity.begin.pseudo.css"
         }
       }
     },
@@ -1033,13 +1043,13 @@
       },
       "patterns": [
         {
-          "match": "(--)?([-a-zA-Z_][\\w-]*)(?:,([^)]+))?",
+          "match": "((-{2,})(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*))(?:,([^)]+))?",
           "captures": {
             "1": {
-              "name": "punctuation.definition.variable.env.css"
+              "name": "variable.property.css"
             },
             "2": {
-              "name": "variable.property.css"
+              "name": "punctuation.definition.variable.env.css"
             },
             "3": {
               "patterns": [
@@ -1133,7 +1143,7 @@
           "patterns": [
             {
               "name": "variable.font-feature.css",
-              "match": "(?:[-a-zA-Z_]|[^\\x00-\\x7F])(?:[-a-zA-Z0-9_]|[^\\x00-\\x7F]|\\\\(?:[0-9a-fA-F]{1,6}|.))*",
+              "match": "-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
               "captures": {
                 "0": {
                   "patterns": [
@@ -1324,10 +1334,10 @@
     },
     "functional-selector": {
       "name": "entity.other.attribute-name.placeholder.css",
-      "match": "(?<![\\w-])(\\%)(?:[-a-zA-Z_]|[^\\x00-\\x7F])(?:[-a-zA-Z0-9_]|[^\\x00-\\x7F]|\\\\(?:[0-9a-fA-F]{1,6}|.))*",
+      "match": "(?<![\\w-])(\\%)-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
       "captures": {
         "1": {
-          "name": "punctuation.definition.entity.placeholder"
+          "name": "punctuation.definition.entity.placeholder.css"
         }
       }
     },
@@ -1457,7 +1467,7 @@
         },
         {
           "name": "meta.function.misc.css",
-          "begin": "(?i)(?<![\\w-])(annotation|attr|blur|brightness|character-variant|contrast|counters?|cross-fade|drop-shadow|element|fit-content|format|grayscale|hue-rotate|image-set|invert|local|minmax|opacity|ornaments|repeat|saturate|sepia|styleset|stylistic|swash|symbols)(\\()",
+          "begin": "(-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)(\\()",
           "beginCaptures": {
             "1": {
               "name": "support.function.misc.css"
@@ -1585,7 +1595,7 @@
           "patterns": [
             {
               "name": "variable.argument.css",
-              "match": "(--)(?:[-a-zA-Z_]|[^\\x00-\\x7F])(?:[-a-zA-Z0-9_]|[^\\x00-\\x7F]|\\\\(?:[0-9a-fA-F]{1,6}|.))*",
+              "match": "(-{2,})(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
               "captures": {
                 "1": {
                   "name": "punctuation.definition.variable.property.css"
@@ -1834,7 +1844,7 @@
           "include": "#composes-atrule"
         },
         {
-          "begin": "(?i)(@)([\\w-]+)",
+          "begin": "(?i)(@)(-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)",
           "beginCaptures": {
             "0": {
               "name": "keyword.control.at-rule.nesting.css"
@@ -1843,7 +1853,12 @@
               "name": "punctuation.definition.keyword.css"
             }
           },
-          "end": "(?=\\s*[{;])"
+          "end": "(?=\\s*[{;])",
+          "patterns": [
+            {
+              "include": "#property-values"
+            }
+          ]
         }
       ]
     },
@@ -1896,7 +1911,7 @@
         },
         {
           "name": "constant.numeric.css",
-          "match": "(?i)(?<![\\w-])[-+]?(?:[0-9]+(?:\\.[0-9]+)?|\\.[0-9]+)(?:(?<=[0-9])E[-+]?[0-9]+)?(?:(%)|(ch|cm|deg|dpcm|dpi|dppx|em|ex|fr|grad|Hz|in|kHz|mm|mozmm|ms|pc|pt|px|q|rad|rem|s|turn|vh|vmax|vmin|vw)\\b)?",
+          "match": "(?<![\\w-])[-+]?(?:[0-9]+(?:\\.[0-9]+)?|\\.[0-9]+)(?:(?<=[0-9])[Ee][-+]?[0-9]+)?(?:(%)|(-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)\\b)?",
           "captures": {
             "1": {
               "name": "keyword.other.unit.percentage.css"
@@ -1905,6 +1920,23 @@
               "name": "keyword.other.unit.${2:/downcase}.css"
             }
           }
+        }
+      ]
+    },
+    "misc-words": {
+      "patterns": [
+        {
+          "name": "variable.prop.css",
+          "match": "(?<![\\w-])(-{2,})(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.variable"
+            }
+          }
+        },
+        {
+          "name": "support.constant.property-value.misc.css",
+          "match": "-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*"
         }
       ]
     },
@@ -1931,12 +1963,12 @@
     "property-names": {
       "patterns": [
         {
-          "name": "support.type.property-name.css",
-          "match": "(?i)(?<![\\w-])(?:additive-symbols|adjust|after|align|align-content|align-items|align-last|align-self|alignment|alignment-adjust|alignment-baseline|all|alt|animation|animation-delay|animation-direction|animation-duration|animation-fill-mode|animation-iteration-count|animation-name|animation-play-state|animation-timing-function|appearance|appearance|attachment|azimuth|azimuth|backdrop-filter|backface-visibility|background|background-attachment|background-blend-mode|background-break|background-clip|background-color|background-image|background-origin|background-position|background-position-x|background-position-y|background-repeat|background-size|balance|baseline|baseline-shift|before|behavior|bidi|binding|bleed|block-size|bookmark|bookmark-label|bookmark-level|bookmark-target|border|border-block|border-block-end|border-block-end-color|border-block-end-style|border-block-end-width|border-block-start|border-block-start-color|border-block-start-style|border-block-start-width|border-bottom|border-bottom-color|border-bottom-left-radius|border-bottom-right-radius|border-bottom-style|border-bottom-width|border-collapse|border-color|border-end-end-radius|border-end-start-radius|border-image|border-image-outset|border-image-repeat|border-image-slice|border-image-source|border-image-width|border-inline|border-inline-end|border-inline-end-color|border-inline-end-style|border-inline-end-width|border-inline-start|border-inline-start-color|border-inline-start-style|border-inline-start-width|border-left|border-left-color|border-left-style|border-left-width|border-length|border-radius|border-right|border-right-color|border-right-style|border-right-width|border-spacing|border-start-end-radius|border-start-start-radius|border-style|border-top|border-top-color|border-top-left-radius|border-top-right-radius|border-top-style|border-top-width|border-width|bottom|bottom-color|bottom-left-radius|bottom-right-radius|bottom-style|bottom-width|box|box-align|box-align|box-decoration-break|box-direction|box-direction|box-flex|box-flex|box-flex-group|box-flex-group|box-lines|box-lines|box-ordinal-group|box-ordinal-group|box-orient|box-orient|box-pack|box-pack|box-shadow|box-sizing|break|break-after|break-before|break-inside|caption-side|caret-color|character|clear|clip|clip-path|clip-rule|clip-rule|collapse|color|color-adjust|color-interpolation|color-interpolation-filters|color-interpolation-filters|color-profile|color-rendering|column|column-break-after|column-break-before|column-count|column-fill|column-gap|column-rule|column-rule-color|column-rule-style|column-rule-width|column-span|column-width|columns|compose-with|composes|contain|content|count|counter|counter-increment|counter-reset|crop|cue|cue-after|cue-before|cursor|cx|cy|decoration|decoration-break|delay|direction|display|display-model|display-role|dominant-baseline|down|drop|drop-initial-after-adjust|drop-initial-after-align|drop-initial-before-adjust|drop-initial-before-align|drop-initial-size|drop-initial-value|duration|elevation|emphasis|empty-cells|enable-background|enable-background|fallback|family|fill|fill|fill-opacity|fill-opacity|fill-rule|fill-rule|filter|fit|fit-position|flex|flex-basis|flex-direction|flex-flow|flex-group|flex-grow|flex-shrink|flex-wrap|float|float-offset|flood-color|flood-color|flood-opacity|flood-opacity|font|font-display|font-family|font-feature-settings|font-kerning|font-language-override|font-optical-sizing|font-size|font-size-adjust|font-stretch|font-style|font-synthesis|font-variant|font-variant-alternates|font-variant-caps|font-variant-east-asian|font-variant-ligatures|font-variant-numeric|font-variant-position|font-variation-settings|font-weight|gap|gap|glyph-orientation-horizontal|glyph-orientation-horizontal|glyph-orientation-vertical|glyph-orientation-vertical|grid|grid-area|grid-auto-columns|grid-auto-flow|grid-auto-rows|grid-column|grid-column-end|grid-column-gap|grid-column-start|grid-columns|grid-gap|grid-row|grid-row-end|grid-row-gap|grid-row-start|grid-rows|grid-template|grid-template-areas|grid-template-columns|grid-template-rows|hanging-punctuation|hanging-punctuation|header|height|height|hyphenate|hyphenate-after|hyphenate-before|hyphenate-character|hyphenate-lines|hyphenate-resource|hyphens|icon|image|image-orientation|image-rendering|image-resolution|ime-mode|increment|indent|index|initial-after-adjust|initial-after-align|initial-before-adjust|initial-before-align|initial-letter|initial-letter-align|initial-size|initial-value|inline-box-align|inline-size|inset|inset-block|inset-block-end|inset-block-start|inset-inline|inset-inline-end|inset-inline-start|isolation|iteration-count|justify|justify-content|justify-items|justify-self|kerning|kerning|label|left|left-color|left-style|left-width|length|letter-spacing|level|lighting-color|lighting-color|line|line-break|line-clamp|line-height|line-stacking|line-stacking-ruby|line-stacking-shift|line-stacking-strategy|lines|list|list-style|list-style-image|list-style-position|list-style-type|margin|margin-block|margin-block-end|margin-block-start|margin-bottom|margin-inline|margin-inline-end|margin-inline-start|margin-left|margin-right|margin-top|mark|mark-after|mark-before|marker|marker-end|marker-end|marker-mid|marker-mid|marker-start|marker-start|marks|marks|marquee|marquee-direction|marquee-play-count|marquee-speed|marquee-style|mask|mask-border|mask-border-mode|mask-border-outset|mask-border-repeat|mask-border-slice|mask-border-source|mask-border-width|mask-clip|mask-composite|mask-image|mask-mode|mask-origin|mask-position|mask-repeat|mask-size|mask-type|max|max-block-size|max-height|max-inline-size|max-lines|max-width|max-zoom|min|min-block-size|min-height|min-inline-size|min-width|min-zoom|mix-blend-mode|model|motion|motion-offset|motion-path|motion-rotation|move-to|name|nav|nav-down|nav-down|nav-index|nav-index|nav-left|nav-left|nav-right|nav-right|nav-up|nav-up|negative|new|numeral|object-fit|object-position|offset|opacity|order|ordinal-group|orient|orientation|origin|orphans|outline|outline-color|outline-offset|outline-style|outline-width|overflow|overflow-anchor|overflow-block|overflow-clip-box|overflow-inline|overflow-style|overflow-wrap|overflow-x|overflow-y|overhang|overscroll-behavior|overscroll-behavior-x|overscroll-behavior-y|pack|pad|padding|padding-block|padding-block-end|padding-block-start|padding-bottom|padding-inline|padding-inline-end|padding-inline-start|padding-left|padding-right|padding-top|page|page-break-after|page-break-before|page-break-inside|page-policy|paint-order|pause|pause-after|pause-before|perspective|perspective-origin|phonemes|pitch|pitch-range|place-content|place-items|place-self|play-count|play-during|play-state|point|pointer-events|position|prefix|presentation|presentation-level|profile|property|punctuation|punctuation-trim|quotes|r|radius|range|rate|rendering-intent|repeat|replace|reset|resize|resolution|resource|respond-to|rest|rest-after|rest-before|richness|right|right-color|right-style|right-width|role|rotate|rotation|rotation-point|row-gap|rows|ruby|ruby-align|ruby-merge|ruby-overhang|ruby-overhang|ruby-position|ruby-span|ruby-span|rule|rule-color|rule-style|rule-width|rx|ry|scale|scroll-behavior|scroll-margin|scroll-margin-block|scroll-margin-block-end|scroll-margin-block-start|scroll-margin-bottom|scroll-margin-inline|scroll-margin-inline-end|scroll-margin-inline-start|scroll-margin-left|scroll-margin-right|scroll-margin-top|scroll-padding|scroll-padding-block|scroll-padding-block-end|scroll-padding-block-start|scroll-padding-bottom|scroll-padding-inline|scroll-padding-inline-end|scroll-padding-inline-start|scroll-padding-left|scroll-padding-right|scroll-padding-top|scroll-snap-align|scroll-snap-coordinate|scroll-snap-destination|scroll-snap-points-x|scroll-snap-points-y|scroll-snap-stop|scroll-snap-type|scroll-snap-type-x|scroll-snap-type-y|scrollbar-3dlight-color|scrollbar-arrow-color|scrollbar-base-color|scrollbar-color|scrollbar-darkshadow-color|scrollbar-face-color|scrollbar-highlight-color|scrollbar-shadow-color|scrollbar-track-color|scrollbar-width|shadow|shape-image-threshold|shape-margin|shape-outside|shape-rendering|shape-rendering|size|size|size-adjust|sizing|space|space-collapse|spacing|span|speak|speak-as|speak-header|speak-numeral|speak-punctuation|speech|speech-rate|speed|src|stacking|stacking-ruby|stacking-shift|stacking-strategy|stop-color|stop-color|stop-opacity|stop-opacity|stress|stretch|string-set|stroke|stroke|stroke-dasharray|stroke-dasharray|stroke-dashoffset|stroke-dashoffset|stroke-linecap|stroke-linecap|stroke-linejoin|stroke-linejoin|stroke-miterlimit|stroke-miterlimit|stroke-opacity|stroke-opacity|stroke-width|stroke-width|style|style-image|style-position|style-type|suffix|symbols|system|tab-size|table-layout|target|target-name|target-new|target-position|text|text-align|text-align-last|text-anchor|text-anchor|text-combine-upright|text-decoration|text-decoration-color|text-decoration-line|text-decoration-skip|text-decoration-skip-ink|text-decoration-style|text-emphasis|text-emphasis-color|text-emphasis-position|text-emphasis-style|text-height|text-indent|text-justify|text-justify|text-orientation|text-outline|text-overflow|text-rendering|text-replace|text-shadow|text-size-adjust|text-transform|text-underline-position|text-wrap|timing-function|top|top-color|top-left-radius|top-right-radius|top-style|top-width|touch-action|transform|transform-box|transform-origin|transform-style|transition|transition-delay|transition-duration|transition-property|transition-timing-function|translate|trim|unicode|unicode-bidi|unicode-range|up|user-select|user-select|user-zoom|variant|vertical-align|visibility|voice|voice-balance|voice-duration|voice-family|voice-pitch|voice-pitch-range|voice-rate|voice-stress|voice-volume|volume|weight|white|white-space|white-space-collapse|widows|width|width|will-change|word|word-break|word-spacing|word-wrap|wrap|writing-mode|x|y|z-index|zoom)(?![\\w-])"
+          "name": "support.type.vendored.property-name.css",
+          "match": "-[A-Z_a-z]+-(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*"
         },
         {
-          "name": "support.type.vendored.property-name.css",
-          "match": "(?<![\\w-])(?i:-(?:ah|apple|atsc|epub|hp|khtml|moz|ms|o|rim|ro|tc|wap|webkit|xv)|(?:mso|prince))-[a-zA-Z-]+"
+          "name": "support.type.property-name.css",
+          "match": "-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*"
         }
       ]
     },
@@ -1972,12 +2004,15 @@
         {
           "name": "keyword.other.important.css",
           "match": "!\\s*important(?![\\w-])"
+        },
+        {
+          "include": "#misc-words"
         }
       ]
     },
     "pseudo-classes": {
       "name": "entity.other.attribute-name.pseudo-class.css",
-      "match": "(?i)(:)(:*)(?:active|any-link|blank|checked|default|defined|disabled|empty|enabled|first|(?:first|last|only)-(?:child|of-type)|focus|focus-visible|focus-within|fullscreen|global|host|hover|in-range|indeterminate|invalid|left|link|optional|out-of-range|placeholder-shown|read-only|read-write|required|right|root|scope|target|unresolved|valid|visited)(?![\\w-]|\\s*[;}])",
+      "match": "(?i)(:)(:*)(?:[A-Za-z](?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)(?![\\w-]|\\s*[;}])",
       "captures": {
         "1": {
           "name": "punctuation.definition.entity.css"
@@ -2038,7 +2073,7 @@
         },
         {
           "name": "variable.prop.css",
-          "match": "(?<![\\w-])(--)(?:[-a-zA-Z_]|[^\\x00-\\x7F])(?:[-a-zA-Z0-9_]|[^\\x00-\\x7F]|\\\\(?:[0-9a-fA-F]{1,6}|.))*",
+          "match": "(?<![\\w-])(-{2,})(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
           "captures": {
             "1": {
               "name": "punctuation.definition.variable"
@@ -2099,7 +2134,7 @@
     "sass-declaration": {
       "patterns": [
         {
-          "begin": "(?<![\\w-])((\\$)(?:[-a-zA-Z_]|[^\\x00-\\x7F])(?:[-a-zA-Z0-9_]|[^\\x00-\\x7F]|\\\\(?:[0-9a-fA-F]{1,6}|.))*)(:)\\s*",
+          "begin": "(?<![\\w-])((\\$)-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)(:)\\s*",
           "beginCaptures": {
             "1": {
               "name": "variable.sass.css"
@@ -2148,7 +2183,7 @@
           "end": "\\s*(?=;)",
           "patterns": [
             {
-              "begin": "((?:[-a-zA-Z_]|[^\\x00-\\x7F])(?:[-a-zA-Z0-9_]|[^\\x00-\\x7F]|\\\\(?:[0-9a-fA-F]{1,6}|.))*)(:)\\s*",
+              "begin": "(-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)(:)\\s*",
               "beginCaptures": {
                 "1": {
                   "name": "variable.css-modules.css"
@@ -2208,7 +2243,7 @@
     },
     "sass-variable": {
       "name": "variable.sass.css",
-      "match": "(?<![\\w-])(\\$)(?:[-a-zA-Z_]|[^\\x00-\\x7F])(?:[-a-zA-Z0-9_]|[^\\x00-\\x7F]|\\\\(?:[0-9a-fA-F]{1,6}|.))*",
+      "match": "(?<![\\w-])(\\$)-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
       "captures": {
         "1": {
           "name": "punctuation.definition.variable"
@@ -2240,7 +2275,7 @@
           "include": "#combinators"
         },
         {
-          "match": "(?:^|(?<=[\\s,(};]))(?![-\\w*]+\\|(?![-\\[:.*\\#a-zA-Z_]|[^\\x00-\\x7F]))((?:[-a-zA-Z_]|[^\\x00-\\x7F])(?:[-a-zA-Z0-9_]|[^\\x00-\\x7F]|\\\\(?:[0-9a-fA-F]{1,6}|.))*|\\*)?(\\|)",
+          "match": "(?:^|(?<=[\\s,(};]))(?![-\\w*]+\\|(?![-\\[:.*\\#a-zA-Z_]|[^\\x00-\\x7F]))(-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*|\\*)?(\\|)",
           "captures": {
             "1": {
               "name": "entity.other.namespace-prefix.css"

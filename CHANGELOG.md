@@ -1,5 +1,9 @@
 # Changes to PostCSS Language Support
 
+## 1.0.5
+
+- Support all identifier tokens wherever identifier tokens are supported.
+
 ## 1.0.4
 
 - Support CSS Modules `compose-with` alternative.
