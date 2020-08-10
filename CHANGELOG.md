@@ -1,5 +1,9 @@
 # Changes to PostCSS Language Support
 
+## 1.0.8
+
+- Support `@property` rule.
+
 ## 1.0.7
 
 - Support color customizations for variables and other custom words.

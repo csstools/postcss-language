@@ -1,6 +1,6 @@
 {
   "name": "postcss",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "displayName": "PostCSS Language Support",
   "description": "Syntax highlighting for modern and experimental CSS in VSCode",
   "author": "Jonathan Neal <jonathantneal@hotmail.com>",
