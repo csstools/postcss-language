@@ -235,6 +235,35 @@
           ]
         },
         {
+          "name": "meta.at-rule.property.css",
+          "begin": "(?i)((@)property)(?=\\s*|{|/\\*|$)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control.at-rule.property.css"
+            },
+            "2": {
+              "name": "punctuation.definition.keyword.css"
+            }
+          },
+          "end": "(?!\\G)",
+          "patterns": [
+            {
+              "match": "\\s*((-{2,})?-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)",
+              "captures": {
+                "1": {
+                  "name": "variable.argument.property.css"
+                },
+                "2": {
+                  "name": "punctuation.definition.variable.css"
+                }
+              }
+            },
+            {
+              "include": "#media-query-list"
+            }
+          ]
+        },
+        {
           "begin": "(?i)(?=@counter-style([\\s'\"{;]|/\\*|$))",
           "end": "(?<=})(?!\\G)",
           "patterns": [
