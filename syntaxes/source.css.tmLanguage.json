@@ -235,17 +235,17 @@
           ]
         },
         {
-          "name": "meta.at-rule.property.css",
-          "begin": "(?i)((@)property)(?=\\s*|{|/\\*|$)",
+          "name": "meta.at-rule.${3:/downcase}.css",
+          "begin": "(?i)((@)(property|unit))(?=[\\s@'\"{;]|/\\*|$)",
           "beginCaptures": {
             "1": {
-              "name": "keyword.control.at-rule.property.css"
+              "name": "keyword.control.at-rule.${3:/downcase}.css"
             },
             "2": {
               "name": "punctuation.definition.keyword.css"
             }
           },
-          "end": "(?!\\G)",
+          "end": "(?=\\s*{)",
           "patterns": [
             {
               "match": "\\s*((-{2,})?-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)",
@@ -847,71 +847,54 @@
       "end": "\\n"
     },
     "composes-atrule": {
+      "begin": "(?i)(@)(?:compose-with|composes)(?=\\z|\\s|;|/\\z|/\\*)",
+      "beginCaptures": {
+        "0": {
+          "name": "keyword.control.at-rule.composition.css"
+        },
+        "1": {
+          "name": "punctuation.separator.key-value.css"
+        }
+      },
+      "end": "(?<=;)(?!\\G)",
       "patterns": [
         {
-          "begin": "(?i)(@)(compose-with|composes)",
-          "beginCaptures": {
-            "0": {
-              "name": "keyword.control.at-rule.composes.css"
-            },
-            "1": {
-              "name": "punctuation.definition.keyword.css"
-            }
-          },
-          "end": ";|(?=[@{])",
-          "endCaptures": {
-            "1": {
-              "name": "punctuation.terminator.rule.css"
-            }
-          },
-          "contentName": "meta.property-value.css",
-          "patterns": [
-            {
-              "include": "#comment-block"
-            },
-            {
-              "name": "entity.other.attribute-name.class.css-modules.css",
-              "match": "[\\w-]+"
-            },
-            {
-              "begin": "\\s+(from)\\s+",
-              "beginCaptures": {
-                "1": {
-                  "name": "keyword.control.from.css-modules.css"
-                }
-              },
-              "end": "(?=;)(?!\\G)",
-              "patterns": [
-                {
-                  "include": "#string"
-                },
-                {
-                  "name": "entity.other.attribute-name.class.css-modules.css",
-                  "match": "[\\w-]"
-                },
-                {
-                  "name": "punctuation.terminator.rule.css",
-                  "match": ";"
-                }
-              ]
-            }
-          ]
+          "include": "#comment-block"
         },
         {
-          "name": "punctuation.terminator.rule.css",
-          "match": ";"
+          "include": "#string"
+        },
+        {
+          "name": "keyword.control.from.css-modules.css",
+          "match": "from"
+        },
+        {
+          "name": "entity.other.attribute-name.class.css-modules.css",
+          "match": "(-{2,})?-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.entity.begin.css-modules.css"
+            }
+          }
         }
       ]
     },
     "composes-declaration": {
       "patterns": [
         {
-          "begin": "(?<![\\w-])(?:(compose-with|composes)(:))\\s*",
+          "begin": "(?i)(compose-with|composes)((?:/\\*(?:[^*]|\\*[^/])*\\*/|\\s+)*)(:)(?=\\z|\\s|;|/\\z|/\\*)",
           "beginCaptures": {
             "1": {
               "name": "support.type.property-name.composes.css"
             },
             "2": {
+              "patterns": [
+                {
+                  "include": "#comment-block"
+                }
+              ]
+            },
+            "3": {
               "name": "punctuation.separator.key-value.css"
             }
           },
@@ -927,30 +910,20 @@
               "include": "#comment-block"
             },
             {
-              "name": "entity.other.attribute-name.class.css-modules.css",
-              "match": "[\\w-]+"
+              "include": "#string"
             },
             {
-              "begin": "\\s+(from)\\s+",
-              "beginCaptures": {
+              "name": "keyword.control.from.css-modules.css",
+              "match": "from"
+            },
+            {
+              "name": "entity.other.attribute-name.class.css-modules.css",
+              "match": "(-{2,})?-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
+              "captures": {
                 "1": {
-                  "name": "keyword.control.from.css-modules.css"
+                  "name": "punctuation.definition.entity.begin.css-modules.css"
                 }
-              },
-              "end": "(?=;)(?!\\G)",
-              "patterns": [
-                {
-                  "include": "#string"
-                },
-                {
-                  "name": "entity.other.attribute-name.class.css-modules.css",
-                  "match": "[\\w-]"
-                },
-                {
-                  "name": "punctuation.terminator.rule.css",
-                  "match": ";"
-                }
-              ]
+              }
             }
           ]
         },
@@ -1257,15 +1230,23 @@
     "functional-pseudo-classes": {
       "patterns": [
         {
-          "begin": "(?i)((:)dir)(\\()",
+          "name": "meta.selector.pseudo-class.directionality.css",
+          "begin": "(?i)(:)((?:/\\*(?:[^*]|\\*[^/])*\\*/)*)(dir)(\\()",
           "beginCaptures": {
-            "1": {
-              "name": "entity.other.attribute-name.pseudo-class.css"
+            "0": {
+              "name": "entity.other.attribute-name.pseudo-element.dir.css"
             },
-            "2": {
+            "1": {
               "name": "punctuation.definition.entity.css"
             },
-            "3": {
+            "2": {
+              "patterns": [
+                {
+                  "include": "#comment-block"
+                }
+              ]
+            },
+            "4": {
               "name": "punctuation.section.function.begin.bracket.round.css"
             }
           },
@@ -1280,14 +1261,21 @@
               "include": "#comment-block"
             },
             {
-              "include": "#escapes"
+              "name": "variable.parameter.direction.css",
+              "match": "-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
+              "captures": {
+                "0": {
+                  "patterns": [
+                    {
+                      "include": "#escapes"
+                    }
+                  ]
+                }
+              }
             },
             {
-              "name": "support.constant.text-direction.css",
-              "match": "(?i)(?<![\\w-])(ltr|rtl)(?![\\w-])"
-            },
-            {
-              "include": "#property-values"
+              "name": "invalid.illegal.bad-identifier.css",
+              "match": "[^)\\s][^)]+"
             }
           ]
         },
@@ -1369,15 +1357,23 @@
           ]
         },
         {
-          "begin": "(?i)((:)(?:has|is|matches|not|where))(\\()",
+          "name": "meta.selector.pseudo-class.combinations.css",
+          "begin": "(?i)(:)((?:/\\*(?:[^*]|\\*[^/])*\\*/)*)(has|is|matches|not|where)(\\()",
           "beginCaptures": {
-            "1": {
-              "name": "entity.other.attribute-name.pseudo-class.css"
+            "0": {
+              "name": "entity.other.attribute-name.pseudo-class.${3:/downcase}.css"
             },
-            "2": {
+            "1": {
               "name": "punctuation.definition.entity.css"
             },
-            "3": {
+            "2": {
+              "patterns": [
+                {
+                  "include": "#comment-block"
+                }
+              ]
+            },
+            "4": {
               "name": "punctuation.section.function.begin.bracket.round.css"
             }
           },
@@ -1394,15 +1390,23 @@
           ]
         },
         {
-          "begin": "(?i)((:)nth-(?:last-)?(?:child|of-type))(\\()",
+          "name": "meta.selector.pseudo-class.child-indexed.css",
+          "begin": "(?i)(:)((?:/\\*(?:[^*]|\\*[^/])*\\*/)*)(nth-(?:last-)?(?:child|of-type))(\\()",
           "beginCaptures": {
-            "1": {
-              "name": "entity.other.attribute-name.pseudo-class.css"
+            "0": {
+              "name": "entity.other.attribute-name.pseudo-class.${3:/downcase}.css"
             },
-            "2": {
+            "1": {
               "name": "punctuation.definition.entity.css"
             },
-            "3": {
+            "2": {
+              "patterns": [
+                {
+                  "include": "#comment-block"
+                }
+              ]
+            },
+            "4": {
               "name": "punctuation.section.function.begin.bracket.round.css"
             }
           },
@@ -1414,23 +1418,101 @@
           },
           "patterns": [
             {
+              "include": "#comment-block"
+            },
+            {
               "name": "constant.numeric.css",
               "match": "(?i)[+-]?(\\d+n?|n)(\\s*[+-]\\s*\\d+)?"
             },
             {
               "name": "support.constant.parity.css",
               "match": "(?i)even|odd"
+            },
+            {
+              "name": "invalid.illegal.bad-identifier.css",
+              "match": "[^)\\s][^)]+"
+            }
+          ]
+        },
+        {
+          "name": "entity.other.attribute-name.pseudo-element.part.css",
+          "begin": "(?i)(:)((?:/\\*(?:[^*]|\\*[^/])*\\*/)*)(:)((?:/\\*(?:[^*]|\\*[^/])*\\*/)*)(part)(\\()",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.entity.css"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#comment-block"
+                }
+              ]
+            },
+            "3": {
+              "name": "punctuation.definition.entity.css"
+            },
+            "4": {
+              "patterns": [
+                {
+                  "include": "#comment-block"
+                }
+              ]
+            },
+            "6": {
+              "name": "punctuation.section.function.begin.bracket.round.css"
+            }
+          },
+          "end": "\\)",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.section.function.end.bracket.round.css"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#comment-block"
+            },
+            {
+              "name": "variable.parameter.part-name.css",
+              "match": "-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
+              "captures": {
+                "0": {
+                  "patterns": [
+                    {
+                      "include": "#escapes"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "invalid.illegal.bad-identifier.css",
+              "match": "@-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*"
+            },
+            {
+              "name": "invalid.illegal.bad-identifier.css",
+              "match": "[^)\\s][^)]+"
             }
           ]
         }
       ]
     },
     "functional-selector": {
-      "name": "entity.other.attribute-name.placeholder.css",
-      "match": "(?<![\\w-])(\\%)-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*",
+      "name": "entity.other.attribute-name.functional.css",
+      "match": "(?<![\\w-])(%)((?:/\\*(?:[^*]|\\*[^/])*\\*/)*)((-{2,})?-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)",
       "captures": {
+        "0": {
+          "name": "entity.other.attribute-name.functional.${3:/downcase}.css"
+        },
         "1": {
-          "name": "punctuation.definition.entity.placeholder.css"
+          "name": "punctuation.definition.entity.functional.css"
+        },
+        "2": {
+          "patterns": [
+            {
+              "include": "#comment-block"
+            }
+          ]
         }
       }
     },
@@ -1944,7 +2026,7 @@
           "include": "#composes-atrule"
         },
         {
-          "begin": "(?i)(@(?:-{2,})?)(-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)",
+          "begin": "(@(?:-{2,})?)(-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)",
           "beginCaptures": {
             "0": {
               "name": "keyword.control.at-rule.nesting.css"
@@ -1980,7 +2062,7 @@
           ]
         },
         {
-          "begin": "(?i)(@)(nest)",
+          "begin": "(?i)(@)(?:nest)(?=\\z|\\s|;|/\\z|/\\*)",
           "beginCaptures": {
             "0": {
               "name": "keyword.control.at-rule.nest.css"
@@ -2114,28 +2196,148 @@
       ]
     },
     "pseudo-classes": {
-      "name": "entity.other.attribute-name.pseudo-class.css",
-      "match": "(?i)(:)(:*)(?:[A-Za-z](?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)(?![\\w-]|\\s*[;}])",
-      "captures": {
-        "1": {
-          "name": "punctuation.definition.entity.css"
+      "patterns": [
+        {
+          "name": "meta.selector.pseudo-class.function.css",
+          "begin": "(:)((?:/\\*(?:[^*]|\\*[^/])*\\*/)*)((-{2,})?-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)(\\()",
+          "beginCaptures": {
+            "0": {
+              "name": "entity.other.attribute-name.pseudo-class.function.${3:/downcase}.css"
+            },
+            "1": {
+              "name": "punctuation.definition.entity.css"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#comment-block"
+                }
+              ]
+            },
+            "4": {
+              "name": "punctuation.definition.function.${3:/downcase}.css"
+            },
+            "5": {
+              "name": "punctuation.section.function.begin.bracket.round.css"
+            }
+          },
+          "end": "\\)",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.section.function.end.bracket.round.css"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#selector-innards"
+            }
+          ]
         },
-        "2": {
-          "name": "invalid.illegal.colon.css"
+        {
+          "name": "meta.selector.pseudo-class.css",
+          "match": "(:)((?:/\\*(?:[^*]|\\*[^/])*\\*/)*)((-{2,})?-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)",
+          "captures": {
+            "0": {
+              "name": "entity.other.attribute-name.pseudo-class.${3:/downcase}.css"
+            },
+            "1": {
+              "name": "punctuation.definition.entity.css"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#comment-block"
+                }
+              ]
+            },
+            "4": {
+              "name": "punctuation.definition.function.${3:/downcase}.css"
+            }
+          }
         }
-      }
+      ]
     },
     "pseudo-elements": {
-      "name": "entity.other.attribute-name.pseudo-element.css",
-      "match": "(?i)(?:(::?)(?:after|before|first-letter|first-line|(?:-(?:ah|apple|atsc|epub|hp|khtml|moz|ms|o|rim|ro|tc|wap|webkit|xv)|(?:mso|prince))-[a-z-]+)|(::)(?:backdrop|content|grammar-error|marker|placeholder|selection|shadow|spelling-error))(?![\\w-]|\\s*[;}])",
-      "captures": {
-        "1": {
-          "name": "punctuation.definition.entity.css"
+      "patterns": [
+        {
+          "name": "meta.selector.pseudo-element.function.css",
+          "begin": "(:)((?:/\\*(?:[^*]|\\*[^/])*\\*/)*)(:)((?:/\\*(?:[^*]|\\*[^/])*\\*/)*)((-{2,})?-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)(\\()",
+          "beginCaptures": {
+            "0": {
+              "name": "entity.other.attribute-name.pseudo-element.${5:/downcase}.function.css"
+            },
+            "1": {
+              "name": "punctuation.definition.entity.css"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#comment-block"
+                }
+              ]
+            },
+            "3": {
+              "name": "punctuation.definition.entity.css"
+            },
+            "4": {
+              "patterns": [
+                {
+                  "include": "#comment-block"
+                }
+              ]
+            },
+            "6": {
+              "name": "punctuation.definition.function.${3:/downcase}.css"
+            },
+            "7": {
+              "name": "punctuation.section.function.begin.bracket.round.css"
+            }
+          },
+          "end": "\\)",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.section.function.end.bracket.round.css"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#selector-innards"
+            }
+          ]
         },
-        "2": {
-          "name": "punctuation.definition.entity.css"
+        {
+          "name": "meta.selector.pseudo-element.css",
+          "match": "(:)((?:/\\*(?:[^*]|\\*[^/])*\\*/)*)(:)((?:/\\*(?:[^*]|\\*[^/])*\\*/)*)((-{2,})?-?(?:[-A-Z_a-z]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])(?:[-\\w]|[^\\x00-\\x7F]|\\\\[^\\n\\f\\r])*)",
+          "captures": {
+            "0": {
+              "name": "entity.other.attribute-name.pseudo-element.${5:/downcase}.css"
+            },
+            "1": {
+              "name": "punctuation.definition.entity.css"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#comment-block"
+                }
+              ]
+            },
+            "3": {
+              "name": "punctuation.definition.entity.css"
+            },
+            "4": {
+              "patterns": [
+                {
+                  "include": "#comment-block"
+                }
+              ]
+            },
+            "6": {
+              "name": "punctuation.definition.function.${3:/downcase}.css"
+            }
+          }
         }
-      }
+      ]
     },
     "rule-list": {
       "name": "meta.property-list.css",
@@ -2299,40 +2501,6 @@
               "patterns": [
                 {
                   "include": "#property-values"
-                },
-                {
-                  "name": "punctuation.terminator.rule.css",
-                  "match": ";"
-                }
-              ]
-            },
-            {
-              "begin": "([\\w-]+(?:\\s*,\\s*[\\w-]+)*)\\s+(from)\\s+",
-              "beginCaptures": {
-                "1": {
-                  "patterns": [
-                    {
-                      "name": "variable.css-modules.css",
-                      "match": "[\\w-]+"
-                    },
-                    {
-                      "name": "punctuation.separator.list.comma.css",
-                      "match": ","
-                    }
-                  ]
-                },
-                "2": {
-                  "name": "keyword.control.from.css-modules.css"
-                }
-              },
-              "end": "(?=;)(?!\\G)",
-              "patterns": [
-                {
-                  "include": "#string"
-                },
-                {
-                  "name": "entity.other.attribute-name.class.css-modules.css",
-                  "match": "[\\w-]"
                 },
                 {
                   "name": "punctuation.terminator.rule.css",
@@ -2532,13 +2700,13 @@
           ]
         },
         {
-          "include": "#pseudo-classes"
+          "include": "#functional-pseudo-classes"
         },
         {
           "include": "#pseudo-elements"
         },
         {
-          "include": "#functional-pseudo-classes"
+          "include": "#pseudo-classes"
         },
         {
           "include": "#custom-selector-variable"
@@ -2614,8 +2782,12 @@
       ]
     },
     "tag-names": {
-      "name": "entity.name.tag.css",
-      "match": "(?i)(?<![\\w:-])(?:a|abbr|acronym|address|altGlyph|altGlyphDef|altGlyphItem|animate|animateColor|animateMotion|animateTransform|annotation|annotation-xml|applet|area|article|aside|audio|b|base|basefont|bdi|bdo|bgsound|big|blink|blockquote|body|br|button|canvas|caption|center|circle|cite|clipPath|code|col|colgroup|color-profile|command|content|cursor|data|datalist|dd|defs|del|desc|details|dfn|dialog|dir|discard|div|dl|dt|element|ellipse|em|embed|feBlend|feColorMatrix|feComponentTransfer|feComposite|feConvolveMatrix|feDiffuseLighting|feDisplacementMap|feDistantLight|feDropShadow|feFlood|feFuncA|feFuncB|feFuncG|feFuncR|feGaussianBlur|feImage|feMerge|feMergeNode|feMorphology|feOffset|fePointLight|feSpecularLighting|feSpotLight|feTile|feTurbulence|fieldset|figcaption|figure|filter|font|font-face|font-face-format|font-face-name|font-face-src|font-face-uri|footer|foreignObject|form|frame|frameset|g|glyph|glyphRef|h[1-6]|hatch|hatchpath|head|header|hgroup|hkern|hr|html|i|iframe|image|img|input|ins|isindex|kbd|keygen|label|legend|li|line|linearGradient|link|listing|maction|main|maligngroup|malignmark|map|mark|marker|marquee|mask|math|math|menclose|menu|menuitem|merror|mesh|meshgradient|meshpatch|meshrow|meta|metadata|meter|mfenced|mfrac|mglyph|mi|missing-glyph|mlabeledtr|mlongdiv|mmultiscripts|mn|mo|mover|mpadded|mpath|mphantom|mroot|mrow|ms|mscarries|mscarry|msgroup|msline|mspace|msqrt|msrow|mstack|mstyle|msub|msubsup|msup|mtable|mtd|mtext|mtr|multicol|munder|munderover|nav|nextid|nobr|noembed|noframes|noscript|object|ol|optgroup|option|output|p|param|path|pattern|picture|plaintext|polygon|polyline|pre|progress|q|radialGradient|rb|rect|rp|rt|rtc|ruby|s|samp|script|section|select|semantics|set|shadow|slot|small|solidcolor|source|spacer|span|stop|strike|strong|style|sub|summary|sup|svg|switch|symbol|table|tbody|td|template|text|textPath|textarea|tfoot|th|thead|time|title|tr|track|tref|tspan|tt|u|ul|use|var|video|view|vkern|wbr|xmp)(?=[+~>\\s,.;\\#|){:\\[]|/\\*|$)"
+      "match": "(-?(?![0-9])(?:[-a-zA-Z0-9_]|[^\\x00-\\x7F]|\\\\(?:[0-9a-fA-F]{1,6}|.))+)(?=$|[\\s,.;\\#)\\[:{>+~|]|/\\*)",
+      "captures": {
+        "0": {
+          "name": "entity.name.tag.$1.css"
+        }
+      }
     },
     "unicode-range": {
       "match": "(?<![\\w-])[Uu]\\+[0-9A-Fa-f?]{1,6}(?:(-)[0-9A-Fa-f]{1,6})?(?![\\w-])",
