@@ -592,6 +592,9 @@
           "include": "#font-features"
         },
         {
+          "include": "#scope-atrule"
+        },
+        {
           "include": "#composes-atrule"
         },
         {
@@ -2520,6 +2523,105 @@
           "name": "punctuation.definition.variable.sass.css"
         }
       }
+    },
+    "scope-atrule": {
+      "begin": "(?i)(?=@scope(\\s|\\(|/\\*|$))",
+      "end": "(?<=})(?!\\G)",
+      "patterns": [
+        {
+          "name": "meta.at-rule.scope.header.css",
+          "begin": "(?i)\\G(@)scope",
+          "beginCaptures": {
+            "0": {
+              "name": "keyword.control.at-rule.scope.css"
+            },
+            "1": {
+              "name": "punctuation.definition.keyword.css"
+            }
+          },
+          "end": "(?=\\s*[{;])",
+          "patterns": [
+            {
+              "include": "#scope-range"
+            }
+          ]
+        },
+        {
+          "name": "meta.at-rule.scope.body.css",
+          "begin": "{",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.section.scope.begin.bracket.curly.css"
+            }
+          },
+          "end": "}",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.section.scope.end.bracket.curly.css"
+            }
+          },
+          "patterns": [
+            {
+              "include": "$self"
+            }
+          ]
+        }
+      ]
+    },
+    "scope-list": {
+      "begin": "\\s*",
+      "end": "(?=\\s*[{;])",
+      "patterns": [
+        {
+          "include": "#scope-range"
+        }
+      ]
+    },
+    "scope-range": {
+      "name": "magic.johnson",
+      "begin": "\\G",
+      "end": "(?=\\s*[{;])",
+      "patterns": [
+        {
+          "include": "#comment-block"
+        },
+        {
+          "include": "#escapes"
+        },
+        {
+          "name": "meta.scope.todo.todo.todo.css",
+          "begin": "(\\()(from|to)(:)\\s*",
+          "beginCaptures": {
+            "0": {
+              "name": "entity.other.attribute-name.pseudo-class.${1:/downcase}.css"
+            },
+            "1": {
+              "name": "punctuation.section.function.begin.bracket.round.css"
+            },
+            "2": {
+              "name": "punctuation.definition.keyword.css"
+            },
+            "3": {
+              "name": "punctuation.definition.entity.css"
+            }
+          },
+          "end": "\\)",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.section.function.end.bracket.round.css"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#selector-innards"
+            }
+          ]
+        },
+        {
+          "name": "keyword.operator.logical.and.scope.css",
+          "match": "(?i)(?<=\\s|^|\\*/|\\))and(?=\\s|/\\*|$)"
+        }
+      ]
     },
     "selector": {
       "name": "meta.selector.css",

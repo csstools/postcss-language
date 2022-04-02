@@ -1,0 +1,44 @@
+
+{
+  "scopeName": "comment.injection.css",
+  "injectionSelector": "L:source.css",
+  "patterns": [
+    {
+      "include": "#comment-block"
+    }
+  ],
+  "repository": {
+    "comment-block": {
+      "name": "comment.block.css",
+      "begin": "/\\*\\s*[:*]\\s*",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.comment.begin.css"
+        }
+      },
+      "end": "\\s*\\*/",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.comment.end.css"
+        }
+      },
+      "patterns": [
+        {
+          "name": "entity.name.type.css",
+          "match": "(<)[-\\w]+(>)",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.entity.begin.css"
+            },
+            "2": {
+              "name": "punctuation.definition.entity.end.css"
+            }
+          }
+        },
+        {
+          "include": "text.html.markdown#inline"
+        }
+      ]
+    }
+  }
+}
