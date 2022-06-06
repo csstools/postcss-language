@@ -51,6 +51,20 @@
         "language": "postcss"
       },
       {
+        "scopeName": "source.postcss",
+        "injectTo": [
+          "source.css"
+        ],
+        "path": "./syntaxes/source.postcss.tmLanguage.json"
+      },
+      {
+        "scopeName": "source.css.postcss",
+        "injectTo": [
+          "source.css"
+        ],
+        "path": "./syntaxes/source.css.postcss.tmLanguage.json"
+      },
+      {
         "scopeName": "text.html.markdown.css",
         "path": "./syntaxes/text.html.markdown.css.tmLanguage.json",
         "injectTo": [
